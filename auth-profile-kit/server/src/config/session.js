@@ -2,7 +2,7 @@ import session from "express-session";
 import MongoDBStore from "connect-mongodb-session";
 
 const MongoDBStoreSession = MongoDBStore(session);
-const isProduction = process.env.NODE.ENV === "production";
+const isProduction = process.env.NODE_ENV === "production";
 
 const store = new MongoDBStoreSession({
   uri: process.env.DATABASE_URL,
@@ -28,7 +28,7 @@ const sessionConfig = {
 };
 
 const sessionLog = (_req, _, next) => {
-  // console.log(_req.session);
+  if (isProduction) console.log(_req.session);
   next();
 };
 

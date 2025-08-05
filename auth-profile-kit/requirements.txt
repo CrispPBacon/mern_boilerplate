@@ -1,0 +1,7 @@
+Auth
+-Login
+-Signup
+
+Profile
+- Display Photo
+- Edit Username, Password, Email, Display Photo

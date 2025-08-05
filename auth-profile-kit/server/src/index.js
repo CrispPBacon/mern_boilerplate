@@ -26,10 +26,12 @@ app.use([
   errorHandlerMiddleware,
 ]);
 
-// app.use("/api", router, errorHandlerMiddleware);
-
-app.listen(PORT, () => {
+// ? ON SERVER START ? //
+function onServerStart() {
   console.log(`Server listening at http://${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV.toUpperCase()}`);
   connect();
-});
+}
+
+app.set("trust proxy", 1);
+app.listen(PORT, onServerStart);

@@ -1,7 +1,16 @@
 import express from "express";
-import auth from "./auth.routes.js";
+import path from "path";
+import authRoute from "./auth.routes.js";
+import uploadRoute from "./upload.routes.js";
+import { __dirname } from "../utils/general-utils.js";
+import { requireUserSession } from "../middlewares/auth-handler.js";
 
 const router = express.Router();
+
+router.use(
+  "/uploads",
+  express.static(path.join(__dirname, "..", "..", "uploads"))
+);
 
 router.get("/", (_req, res, next) => {
   try {
@@ -18,6 +27,10 @@ router.get("/ip", (req, res) => {
   res.send(`Client IP: ${IpAddress}`);
 });
 
-router.use("/api/auth", auth);
+router.use("/api/auth", authRoute);
+
+// * PRIVATE ROUTES
+router.use(requireUserSession);
+router.use("/api/upload", uploadRoute);
 
 export default router;
